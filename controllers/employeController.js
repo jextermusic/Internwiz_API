@@ -57,6 +57,8 @@ exports.employesendmail = catchAsyncErrors(async (req,res,next) => {
     res.json({employe, url});
 });
 
+
+
 exports.employeforgetlink = catchAsyncErrors(async (req,res,next) => {
     const employe = await Employe.findById(req.params.id).exec();
 
@@ -116,12 +118,31 @@ exports.employeavatar = catchAsyncErrors(async (req, res, next) => {
     })
 });
 
+exports.employedelete = catchAsyncErrors(async (req, res, next) => {
+    const employe = await Employe.findByIdAndDelete(req.params.id).exec();
+
+    if(!employe) return next(new ErrorHandler("User not found with this email address", 404));
+
+    // const isMatch = student.comparepassword(req.body.password);
+    // if(!isMatch) return next(new ErrorHandler("Wrong Credentials", 500));
+
+    res.clearCookie("token");
+    res.json({message: 'Successfully Deleted Employee'})
+});
+
+exports.reademploye = catchAsyncErrors(async (req, res, next) => {
+    const employe = await Employe.find().exec();
+    res.status(200).json({success: true, employe});
+});
+
 //////////////////////////////// Internship ////////////////////////////////
 
 exports.createinternship = catchAsyncErrors(async (req, res, next) => {
     const employe = await Employe.findById(req.id).exec();
     const internship = await new Internship(req.body);
-    internship.employe = employe._id
+    internship.employe.id = employe._id
+    internship.employe.organization = employe.organizationname
+    internship.employe.logo = employe.organizationlogo.url
     employe.internships.push(internship._id);
     await internship.save();
     await employe.save();
@@ -139,6 +160,36 @@ exports.readsingleinternship = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({success: true, internship});
 });
 
+exports.deletesingleinternship = catchAsyncErrors(async (req, res, next) => {
+    const internship = await Internship.findByIdAndDelete(req.params.id).exec();
+    // if(!internship) return new ErrorHandler("Internship not found")
+    res.status(200).json({success: true, internship});
+});
+
+exports.viewinternship = catchAsyncErrors(async (req, res, next) => {
+    const internship = await Internship.find().exec();
+    // if(!internship) return new ErrorHandler("Internship not found")
+    res.status(200).json({success: true, internship});
+});
+
+exports.closeinternship = catchAsyncErrors(async (req, res, next) => {
+    const updatedinternship = await Internship.findByIdAndUpdate(req.params.id, { status: "Closed" }, { new: true }).exec();
+    res.status(200).json({
+        success: true,
+        message: "Internship closed Successfully!",
+        updatedinternship,
+    })
+});
+
+exports.openinternship = catchAsyncErrors(async (req, res, next) => {
+    const updatedinternship = await Internship.findByIdAndUpdate(req.params.id, { status: "Open" }, { new: true }).exec();
+    res.status(200).json({
+        success: true,
+        message: "Internship closed Successfully!",
+        updatedinternship,
+    })
+});
+
 
 //////////////////////////////// Jobs ////////////////////////////////
 
@@ -146,6 +197,8 @@ exports.createjob = catchAsyncErrors(async (req, res, next) => {
     const employe = await Employe.findById(req.id).exec();
     const job = await new Job(req.body);
     job.employe = employe._id
+    job.employe.organization = employe.organizationname
+    job.employe.logo = employe.organizationlogo.url
     employe.jobs.push(job._id);
     await job.save();
     await employe.save();
@@ -160,5 +213,11 @@ exports.readjob = catchAsyncErrors(async (req, res, next) => {
 exports.readsinglejob = catchAsyncErrors(async (req, res, next) => {
     const job = await Job.findById(req.params.id).exec();
     // if(!job) return new ErrorHandler("job not found")
+    res.status(200).json({success: true, job});
+});
+
+exports.viewjob = catchAsyncErrors(async (req, res, next) => {
+    const job = await Job.find().exec();
+    // if(!internship) return new ErrorHandler("Internship not found")
     res.status(200).json({success: true, job});
 });

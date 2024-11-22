@@ -16,6 +16,13 @@ const {
     createjob,
     readjob,
     readsinglejob,
+    employedelete,
+    viewinternship,
+    reademploye,
+    closeinternship,
+    openinternship,
+    deletesingleinternship,
+    viewjob,
 } = require("../controllers/employeController");
 const { isAuthenticated } = require("../middlewares/auth");
 const router = express.Router();
@@ -51,8 +58,15 @@ router.post("/update/:id",isAuthenticated, employeupdate);
 // POST /employe/avatar/:employeid
 router.post("/avatar/:id",isAuthenticated, employeavatar);
 
+// POST /employe/delete/:employeid
+router.post("/delete/:id",isAuthenticated, employedelete);
+
+router.post("/readall", isAuthenticated, reademploye)
+
 
 //////////////////////////////// Internship ////////////////////////////////
+
+router.post("/internship/view", viewinternship)
 
 // POST /employe/internship/create
 router.post("/internship/create",isAuthenticated, createinternship);
@@ -63,8 +77,18 @@ router.post("/internship/read",isAuthenticated, readinternship);
 // POST /employe/internship/read/:id
 router.post("/internship/read/:id",isAuthenticated, readsingleinternship);
 
+router.post("/internship/delete/:id",isAuthenticated, deletesingleinternship);
+
+// POST /employe/internship/close/:id
+router.post("/internship/close/:id",isAuthenticated, closeinternship);
+
+// POST /employe/internship/open/:id
+router.post("/internship/open/:id",isAuthenticated, openinternship);
+
 
 //////////////////////////////// Job ////////////////////////////////
+
+router.post("/job/view", viewjob)
 
 // POST /employe/job/create
 router.post("/job/create",isAuthenticated, createjob);

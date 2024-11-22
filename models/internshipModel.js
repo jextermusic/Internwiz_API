@@ -2,7 +2,15 @@ const mongoose = require("mongoose");
 
 const internshipModel = new mongoose.Schema({
         students: [{type: mongoose.Schema.Types.ObjectId, ref: 'student'}],
-        employe: {type: mongoose.Schema.Types.ObjectId, ref: 'internship'},
+        employe: {
+           id: {type: mongoose.Schema.Types.ObjectId, ref: 'internship'},
+           organization: {type: mongoose.Schema.Types.String, ref: 'internship'},
+           logo: {type: mongoose.Schema.Types.String, ref: 'internship'},
+        },
+        status: {
+            type: String,
+            default: "Open",
+        },
         profile: String,
         skill: String,
         internshiptype: {type: String, enum: ["In office", "Remote"]},
@@ -17,10 +25,16 @@ const internshipModel = new mongoose.Schema({
             enum: ["Fixed", "Negotiable", "Performance based", "Unpaid"]
         },
         amount: Number,
+        according: {
+            status: { 
+            type: String,
+            enum: ["/month", "/year"],
+        },
+    }
         
         },
         perks: String,
-        assesments: String,
+        assesments: [],
     },
     
 

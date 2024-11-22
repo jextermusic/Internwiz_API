@@ -37,23 +37,23 @@ exports.deleteeducation = catchAsyncErrors(async (req,res,next) => {
 
 exports.addjob = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    student.resume.job.push({...req.body, id: uuidv4() });
+    student.resume.jobs.push({...req.body, id: uuidv4() });
     await student.save();
     res.json({message: "job Added!"});
 });
 
 exports.editjob = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const jobIndex = student.resume.job.findIndex((i) => i.id === req.params.jobid);
-    student.resume.job[jobIndex] = {...student.resume.job[jobIndex], ...req.body};
+    const jobIndex = student.resume.jobs.findIndex((i) => i.id === req.params.jobid);
+    student.resume.jobs[jobIndex] = {...student.resume.jobs[jobIndex], ...req.body};
     await student.save();
     res.json({message: "job Updated!"});
 });
 
 exports.deletejob = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const filteredjob = student.resume.job.filter((i) => i.id !== req.params.jobid);
-    student.resume.job = filteredjob
+    const filteredjob = student.resume.jobs.filter((i) => i.id !== req.params.jobid);
+    student.resume.jobs = filteredjob
     await student.save();
     res.json({message: "job Deleted!"});
 });
@@ -63,23 +63,23 @@ exports.deletejob = catchAsyncErrors(async (req,res,next) => {
 
 exports.addintern = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    student.resume.intern.push({...req.body, id: uuidv4() });
+    student.resume.internships.push({...req.body, id: uuidv4() });
     await student.save();
     res.json({message: "intern Added!"});
 });
 
 exports.editintern = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const internIndex = student.resume.intern.findIndex((i) => i.id === req.params.internid);
-    student.resume.intern[internIndex] = {...student.resume.intern[internIndex], ...req.body};
+    const internIndex = student.resume.internships.findIndex((i) => i.id === req.params.internid);
+    student.resume.internships[internIndex] = {...student.resume.internships[internIndex], ...req.body};
     await student.save();
     res.json({message: "intern Updated!"});
 });
 
 exports.deleteintern = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const filteredintern = student.resume.intern.filter((i) => i.id !== req.params.internid);
-    student.resume.intern = filteredintern
+    const filteredintern = student.resume.internships.filter((i) => i.id !== req.params.internid);
+    student.resume.internships = filteredintern
     await student.save();
     res.json({message: "intern Deleted!"});
 });
@@ -89,23 +89,23 @@ exports.deleteintern = catchAsyncErrors(async (req,res,next) => {
 
 exports.addresp = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    student.resume.resp.push({...req.body, id: uuidv4() });
+    student.resume.responsibilities.push({...req.body, id: uuidv4() });
     await student.save();
     res.json({message: "resp Added!"});
 });
 
 exports.editresp = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const respIndex = student.resume.resp.findIndex((i) => i.id === req.params.respid);
-    student.resume.resp[respIndex] = {...student.resume.resp[respIndex], ...req.body};
+    const respIndex = student.resume.responsibilities.findIndex((i) => i.id === req.params.respid);
+    student.resume.responsibilities[respIndex] = {...student.resume.responsibilities[respIndex], ...req.body};
     await student.save();
     res.json({message: "resp Updated!"});
 });
 
 exports.deleteresp = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const filteredresp = student.resume.resp.filter((i) => i.id !== req.params.respid);
-    student.resume.resp = filteredresp
+    const filteredresp = student.resume.responsibilities.filter((i) => i.id !== req.params.respid);
+    student.resume.responsibilities = filteredresp
     await student.save();
     res.json({message: "resp Deleted!"});
 });
@@ -115,23 +115,23 @@ exports.deleteresp = catchAsyncErrors(async (req,res,next) => {
 
 exports.addcours = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    student.resume.cours.push({...req.body, id: uuidv4() });
+    student.resume.courses.push({...req.body, id: uuidv4() });
     await student.save();
     res.json({message: "cours Added!"});
 });
 
 exports.editcours = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const coursIndex = student.resume.cours.findIndex((i) => i.id === req.params.coursid);
-    student.resume.cours[coursIndex] = {...student.resume.cours[coursIndex], ...req.body};
+    const coursIndex = student.resume.courses.findIndex((i) => i.id === req.params.coursid);
+    student.resume.courses[coursIndex] = {...student.resume.courses[coursIndex], ...req.body};
     await student.save();
     res.json({message: "cours Updated!"});
 });
 
 exports.deletecours = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const filteredcours = student.resume.cours.filter((i) => i.id !== req.params.coursid);
-    student.resume.cours = filteredcours
+    const filteredcours = student.resume.courses.filter((i) => i.id !== req.params.coursid);
+    student.resume.courses = filteredcours
     await student.save();
     res.json({message: "cours Deleted!"});
 });
@@ -140,23 +140,23 @@ exports.deletecours = catchAsyncErrors(async (req,res,next) => {
 
 exports.addproj = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    student.resume.proj.push({...req.body, id: uuidv4() });
+    student.resume.projects.push({...req.body, id: uuidv4() });
     await student.save();
     res.json({message: "proj Added!"});
 });
 
 exports.editproj = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const projIndex = student.resume.proj.findIndex((i) => i.id === req.params.projid);
-    student.resume.proj[projIndex] = {...student.resume.proj[projIndex], ...req.body};
+    const projIndex = student.resume.projects.findIndex((i) => i.id === req.params.projid);
+    student.resume.projects[projIndex] = {...student.resume.projects[projIndex], ...req.body};
     await student.save();
     res.json({message: "proj Updated!"});
 });
 
 exports.deleteproj = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const filteredproj = student.resume.proj.filter((i) => i.id !== req.params.projid);
-    student.resume.proj = filteredproj
+    const filteredproj = student.resume.projects.filter((i) => i.id !== req.params.projid);
+    student.resume.projects = filteredproj
     await student.save();
     res.json({message: "proj Deleted!"});
 });
@@ -166,23 +166,23 @@ exports.deleteproj = catchAsyncErrors(async (req,res,next) => {
 
 exports.addskil = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    student.resume.skil.push({...req.body, id: uuidv4() });
+    student.resume.skills.push({...req.body, id: uuidv4() });
     await student.save();
     res.json({message: "skil Added!"});
 });
 
 exports.editskil = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const skilIndex = student.resume.skil.findIndex((i) => i.id === req.params.skilid);
-    student.resume.skil[skilIndex] = {...student.resume.skil[skilIndex], ...req.body};
+    const skilIndex = student.resume.skills.findIndex((i) => i.id === req.params.skilid);
+    student.resume.skills[skilIndex] = {...student.resume.skills[skilIndex], ...req.body};
     await student.save();
     res.json({message: "skil Updated!"});
 });
 
 exports.deleteskil = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const filteredskil = student.resume.skil.filter((i) => i.id !== req.params.skilid);
-    student.resume.skil = filteredskil
+    const filteredskil = student.resume.skills.filter((i) => i.id !== req.params.skilid);
+    student.resume.skills = filteredskil
     await student.save();
     res.json({message: "skil Deleted!"});
 });
@@ -192,23 +192,23 @@ exports.deleteskil = catchAsyncErrors(async (req,res,next) => {
 
 exports.addacomp = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    student.resume.acomp.push({...req.body, id: uuidv4() });
+    student.resume.accomplishments.push({...req.body, id: uuidv4() });
     await student.save();
     res.json({message: "acomp Added!"});
 });
 
 exports.editacomp = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const acompIndex = student.resume.acomp.findIndex((i) => i.id === req.params.acompid);
-    student.resume.acomp[acompIndex] = {...student.resume.acomp[acompIndex], ...req.body};
+    const acompIndex = student.resume.accomplishments.findIndex((i) => i.id === req.params.acompid);
+    student.resume.accomplishments[acompIndex] = {...student.resume.accomplishments[acompIndex], ...req.body};
     await student.save();
     res.json({message: "acomp Updated!"});
 });
 
 exports.deleteacomp = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
-    const filteredacomp = student.resume.acomp.filter((i) => i.id !== req.params.acompid);
-    student.resume.acomp = filteredacomp
+    const filteredacomp = student.resume.accomplishments.filter((i) => i.id !== req.params.acompid);
+    student.resume.accomplishments = filteredacomp
     await student.save();
     res.json({message: "acomp Deleted!"});
 });

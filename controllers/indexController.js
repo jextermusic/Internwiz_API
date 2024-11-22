@@ -57,6 +57,24 @@ exports.studentsendmail = catchAsyncErrors(async (req,res,next) => {
     res.json({student, url});
 });
 
+exports.studenttokencheck = catchAsyncErrors(async (req,res,next) => {
+    const student = await Student.findById(req.params.id).exec();
+    if(!student) return next(new ErrorHandler("User not found with this email address", 404));
+    if(student.resetPasswordToken === "1") {
+        res.status(200).json({
+        message: true,
+        student: student.resetPasswordToken
+    })
+    }
+    else{
+        res.status(500),json({
+            message: false,
+            student: student.resetPasswordToken
+        })
+    }
+    
+});
+
 exports.studentforgetlink = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.params.id).exec();
 
@@ -134,7 +152,6 @@ exports.studentdelete = catchAsyncErrors(async (req, res, next) => {
 exports.applyinternship = catchAsyncErrors(async (req,res,next) => {
     const student = await Student.findById(req.id).exec();
     const internship = await Internship.findById(req.params.internshipid).exec();
-
     student.internships.push(internship._id);
     internship.students.push(student._id);
     await student.save();
